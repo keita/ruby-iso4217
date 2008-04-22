@@ -9,11 +9,12 @@ task :code do
   reader.shift
   table = Hash.new
   reader.each do |line|
-    location, currency, code, ccc, obsolete = line
+    location, currency, code, num, ccc, obsolete = line
     if table.key?(code)
       table[code].locations << location
     else
       table[code] = ISO4217::Code.new(:code => code,
+                                      :num => num,
                                       :locations => [location],
                                       :currency => currency,
                                       :ccc => ccc.nil?,
@@ -31,18 +32,17 @@ task :code do
 
   # codes
   table.keys.sort.each do |key|
-    code = table[key].code
     locations = table[key].locations
-    currency = table[key].currency
     ccc = table[key].ccc ? "true" : "false"
     obsolete = table[key].obsolete ? obsolete.inspect : "nil"
 
     # define
     file.puts <<__RB__
   CODE["#{key}"] = ISO4217::Code.new(
-    :code => "#{code}",
+    :code => "#{table[key].code}",
+    :num => #{table[key].num}
     :locations => #{locations.inspect},
-    :currency => "#{currency}",
+    :currency => "#{table[key].currency}",
     :ccc => #{ccc},
     :obsolete => #{obsolete}
   )
