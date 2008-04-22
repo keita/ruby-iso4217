@@ -1,4 +1,5 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), "lib")
+$LOADED_FEATURES << "iso4217/code.rb"
 require "iso4217"
 require "csv"
 require "fileutils"
@@ -17,7 +18,7 @@ task :code do
                                       :num => num,
                                       :locations => [location],
                                       :currency => currency,
-                                      :ccc => ccc.nil?,
+                                      :ccc => !ccc.nil?,
                                       :obsolete => obsolete)
     end
   end
@@ -34,17 +35,17 @@ task :code do
   table.keys.sort.each do |key|
     locations = table[key].locations
     ccc = table[key].ccc ? "true" : "false"
-    obsolete = table[key].obsolete ? obsolete.inspect : "nil"
+    obsolete = table[key].instance_variable_get("@obsolete")
 
     # define
     file.puts <<__RB__
   CODE["#{key}"] = ISO4217::Code.new(
     :code => "#{table[key].code}",
-    :num => #{table[key].num}
+    :num => #{table[key].num || "nil"},
     :locations => #{locations.inspect},
     :currency => "#{table[key].currency}",
     :ccc => #{ccc},
-    :obsolete => #{obsolete}
+    :obsolete => #{obsolete.inspect}
   )
 __RB__
   end
