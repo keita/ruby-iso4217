@@ -1,0 +1,8 @@
+.gemified
+License.txt
+README.txt
+Rakefile
+iso4217.csv
+lib/iso4217.rb
+lib/iso4217/code.rb
+spec/iso4217_spec.rb

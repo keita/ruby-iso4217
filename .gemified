@@ -1,0 +1,9 @@
+--- 
+:summary: ruby-iso4217 is a library for converting between code, currency name, and symbol.
+:email: keita.yamaguchi@gmail.com
+:has_rdoc: true
+:name: iso4217
+:homepage: http://github.com/keita/ruby-iso4217/tree/master
+:version: "001"
+:rubyforge_project: iso4217
+:author: Keita Yamaguchi
