@@ -20,3 +20,5 @@ module ISO4217
 
   CODE = Hash.new
 end
+
+require "iso4217/code"
