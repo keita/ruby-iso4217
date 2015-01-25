@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module ISO4217
   CODE["AED"] = ISO4217::Code.new(
     :code => "AED",
